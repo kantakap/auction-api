@@ -1,0 +1,4 @@
+extend type Query {
+    # retrieve user information based on Bearer JWT
+    me: User
+}
