@@ -28,10 +28,8 @@ public class UserResolver {
     }
 
     @SubscriptionMapping
-//    @MessageMapping("graphql")
 //    @PreAuthorize("hasRole('ROLE_USER')")
     public Flux<User> userEvent(Principal principal) {
-//        ReactiveSecurityContextHolder.getContext().doOnNext(context -> log.info("User {} subscribed to userEvent", principal.getName())).subscribe();
         log.info("Principal {} subscribed to userEvent", principal);
         return userEventService.subscribe();
     }
