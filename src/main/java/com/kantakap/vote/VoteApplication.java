@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @SpringBootApplication
 @EnableReactiveMongoRepositories
 @EnableConfigurationProperties(AuthProperties.class)
-public class BotApplication {
+public class VoteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BotApplication.class, args);
+		SpringApplication.run(VoteApplication.class, args);
 	}
 
 }
