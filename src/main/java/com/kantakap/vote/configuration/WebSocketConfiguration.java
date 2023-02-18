@@ -33,6 +33,9 @@ public class WebSocketConfiguration implements WebSocketGraphQlInterceptor {
     @Override
     public Mono<Object> handleConnectionInitialization(WebSocketSessionInfo sessionInfo, Map<String, Object> connectionInitPayload) {
         log.info("Intercepting connection initialization {}", connectionInitPayload);
+        if (connectionInitPayload.get("Authorization") == null) {
+            return WebSocketGraphQlInterceptor.super.handleConnectionInitialization(sessionInfo, connectionInitPayload);
+        }
         var token = connectionInitPayload.get("Authorization").toString().substring(7);
         log.info("Token: {}", token);
         var username = tokenProvider.getUsernameFromToken(token);
