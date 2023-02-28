@@ -20,6 +20,7 @@ public class CustomReactiveAuthenticationManager implements ReactiveAuthenticati
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         String authToken = authentication.getCredentials().toString();
+        tokenProvider.validateToken(authToken);
         String username = tokenProvider.getUsernameFromToken(authToken);
         return Mono.just(tokenProvider.validateToken(authToken))
                 .filter(valid -> valid)
