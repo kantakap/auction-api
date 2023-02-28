@@ -56,16 +56,20 @@ public class TokenProvider {
             return true;
         } catch (SignatureException ex) {
             logger.error("Invalid JWT signature");
+            throw new RuntimeException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
             logger.error("Invalid JWT token");
+            throw new RuntimeException("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
             logger.error("Expired JWT token");
+            throw new RuntimeException("Expired JWT token");
         } catch (UnsupportedJwtException ex) {
             logger.error("Unsupported JWT token");
+            throw new RuntimeException("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
             logger.error("JWT claims string is empty.");
+            throw new RuntimeException("JWT claims string is empty.");
         }
-        return false;
     }
 
 //    public ReactiveJwtDecoder getAccessTokenDecoder() throws NoSuchAlgorithmException {
