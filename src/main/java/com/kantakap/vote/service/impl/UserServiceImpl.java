@@ -27,6 +27,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+//    @Override
+//    public Mono<User> dummy() {
+//        return userRepository.save(User.builder().username("dummy").build())
+//                .doOnSuccess(user -> System.out.println("Do on success: " + user.getId() + "ID created"))
+//                .doOnNext(user -> System.out.println("Do on next: " + user.getUsername()))
+//                .then(Mono.error(new RuntimeException("Dummy error")));
+//    }
+
     @Override
     public Mono<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
