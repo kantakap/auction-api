@@ -1,21 +1,30 @@
 version: '3.8'
+
 services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    hostname: host
     ports:
-      - "8096:27017"
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_DATABASE: bot
+    networks:
+      - kantakap-auction-api
+
   kantakap-auction-api:
     build:
       context: ./
       dockerfile: Dockerfile
     container_name: kantakap-auction-api
-    hostname: host
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
+    networks:
+      - kantakap-auction-api
+
+networks:
+  kantakap-auction-api:
+    driver: bridge
