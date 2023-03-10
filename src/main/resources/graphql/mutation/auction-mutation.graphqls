@@ -1,0 +1,3 @@
+extend type Mutation {
+    createAuction(createAuction: CreateAuction!): Auction!
+}

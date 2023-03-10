@@ -1,0 +1,7 @@
+type Auction {
+    id: ID!
+    createdBy: User!
+    title: String!
+    startsAt: String!
+    players: [Player]!
+}

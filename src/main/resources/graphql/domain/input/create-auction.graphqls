@@ -1,0 +1,3 @@
+input CreateAuction {
+    title: String!
+}
