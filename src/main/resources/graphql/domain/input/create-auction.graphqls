@@ -4,6 +4,8 @@ input CreateAuction {
     startsAt: DateTime!
     # initial amount of money to be put on the auction
     initialBalance: Int!
+    # funds loss prevention percentage
+    fundsLossPreventionPercentage: Int!
     # initial time for the auction
     initialTime: Int!
     # reset time for the auction

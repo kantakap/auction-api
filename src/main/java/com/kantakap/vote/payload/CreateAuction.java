@@ -2,6 +2,7 @@ package com.kantakap.vote.payload;
 
 import lombok.Data;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,10 @@ public class CreateAuction {
 
     @Min(value = 1000, message = "Initial balance must be at least 1000")
     private Integer initialBalance;
+
+    @Min(value = 50, message = "Funds loss prevention percentage must be at least 50%")
+    @Max(value = 100, message = "Funds loss prevention percentage must be at most 100%")
+    private Integer fundsLossPreventionPercentage;
 
     @Min(value = 10, message = "Initial time must be at least 10 seconds")
     private Integer initialTime;

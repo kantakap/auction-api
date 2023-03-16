@@ -12,6 +12,10 @@ type Auction {
     bidders: [User]!
     # current status of the auction
     status: AuctionStatus!
+    # initial balance
+    initialBalance: Int!
+    # funds loss prevention percentage
+    fundsLossPreventionPercentage: Int!
     # initial time for the auction
     initialTime: Int!
     # reset time for the auction (after a bid)

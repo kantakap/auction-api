@@ -36,6 +36,9 @@ public class Auction {
     // initial bidders balance
     private Integer initialBalance;
 
+    // funds loss prevention percentage
+    private Integer fundsLossPreventionPercentage;
+
     // initial time for the auction
     private Integer initialTime;
 
