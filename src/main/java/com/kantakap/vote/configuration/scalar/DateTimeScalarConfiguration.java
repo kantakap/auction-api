@@ -11,7 +11,7 @@ public class DateTimeScalarConfiguration {
     public static GraphQLScalarType dateTimeScalar() {
         return GraphQLScalarType.newScalar()
                 .name("DateTime")
-                .description("DateTime scalar type, i.e.: 2021-01-01T12:00:00.")
+                .description("Parseable DateTime scalar type, i.e.: 2021-01-01T12:00:00.")
                 .coercing(new DateTimeScalar())
                 .build();
     }
