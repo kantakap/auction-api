@@ -1,0 +1,7 @@
+enum AuctionStatus {
+    CREATED,
+    WAITING_TO_START,
+    STARTED,
+    PAUSED,
+    FINISHED
+}
