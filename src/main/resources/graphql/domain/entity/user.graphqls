@@ -2,5 +2,5 @@ type User {
     id: ID!
     username: String!
     active: Boolean!
-    roles: [String]!
+    roles: [Role]!
 }
