@@ -1,3 +1,15 @@
 input CreateAuction {
     title: String!
+    # when the auction can be started
+    startsAt: DateTime!
+    # initial amount of money to be put on the auction
+    initialBalance: Int!
+    # initial time for the auction
+    initialTime: Int!
+    # reset time for the auction
+    resetTime: Int!
+    # maximum bid amount
+    maximumBidAmount: Int!
+    # minimum bid increment
+    minimumBidIncrement: Int!
 }

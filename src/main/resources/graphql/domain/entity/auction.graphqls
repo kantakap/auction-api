@@ -1,7 +1,29 @@
 type Auction {
     id: ID!
+    # who created the auction
     createdBy: User!
+    # title of the auction
     title: String!
+    # when the auction can be started
     startsAt: String!
+    # list of players to be auctioned
     players: [Player]!
+    # list of bidders / captains
+    bidders: [User]!
+    # current status of the auction
+    status: AuctionStatus!
+    # initial time for the auction
+    initialTime: Int!
+    # reset time for the auction (after a bid)
+    resetTime: Int!
+    # maximum bid amount
+    maximumBidAmount: Int!
+    # minimum bid increment
+    minimumBidIncrement: Int!
+    # guild ID of the discord server
+    guildId: String
+    # channel ID of the discord channel
+    channelId: String
+    # bidder role ID of the discord server
+    bidderRoleId: String
 }
