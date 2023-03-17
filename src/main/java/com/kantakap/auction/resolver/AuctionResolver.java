@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -22,7 +23,7 @@ public class AuctionResolver {
     private final UserService userService;
 
     @MutationMapping
-//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Mono<Auction> createAuction(Principal principal, @Validated @Argument CreateAuction createAuction) {
         return userService.me(principal)
                 .flatMap(user -> auctionService.createAuction(user, createAuction))
