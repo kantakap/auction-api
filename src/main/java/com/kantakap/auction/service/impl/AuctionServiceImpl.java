@@ -26,7 +26,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Mono<Auction> createAuction(User creator, CreateAuction createAuction) {
         if (creator == null)
-            return Mono.error(new IllegalArgumentException("Creator cannot be null."));
+            return Mono.error(new NullPointerException("Creator cannot be null."));
         if (createAuction == null)
             return Mono.error(new IllegalArgumentException("Create auction payload cannot be null."));
 
