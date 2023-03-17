@@ -6,6 +6,7 @@ public class AuctionValidator {
 
     /**
      * Validate that the auction starts at a time in the future
+     *
      * @param startsAt the time the auction starts
      * @return true if the auction starts in the future, false otherwise
      */
@@ -16,6 +17,7 @@ public class AuctionValidator {
 
     /**
      * Validate that the auction starts at least 30 minutes from now
+     *
      * @param startsAt the time the auction starts
      * @return true if the auction starts at least 30 minutes from now, false otherwise
      */
@@ -27,8 +29,9 @@ public class AuctionValidator {
 
     /**
      * Validate that the maximum bid amount is less than the initial balance
+     *
      * @param maximumBidAmount the maximum bid amount
-     * @param initialBalance the initial balance
+     * @param initialBalance   the initial balance
      * @return true if the maximum bid amount is less than the initial balance, false otherwise
      */
     public static boolean validateMaximumBidAmountLessThanInitialBalance(int maximumBidAmount, int initialBalance) {
@@ -37,8 +40,9 @@ public class AuctionValidator {
 
     /**
      * Validate that the maximum bid amount is less than the initial balance * funds loss prevention percentage
-     * @param maximumBidAmount the maximum bid amount
-     * @param initialBalance the initial balance
+     *
+     * @param maximumBidAmount              the maximum bid amount
+     * @param initialBalance                the initial balance
      * @param fundsLossPreventionPercentage the funds loss prevention percentage
      * @return true if the maximum bid amount is less than the initial balance * funds loss prevention percentage, false otherwise
      */
