@@ -18,7 +18,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     /**
      * Creates an auction.
-     * @param creator User who created the auction.
+     *
+     * @param creator       User who created the auction.
      * @param createAuction Auction creation payload.
      * @return Mono of the created auction.
      */
@@ -26,6 +27,8 @@ public class AuctionServiceImpl implements AuctionService {
     public Mono<Auction> createAuction(User creator, CreateAuction createAuction) {
         if (creator == null)
             return Mono.error(new IllegalArgumentException("Creator cannot be null."));
+        if (createAuction == null)
+            return Mono.error(new IllegalArgumentException("Create auction payload cannot be null."));
 
         if (!AuctionValidator.validateStartTimeIsBeforeNow(createAuction.getStartsAt()))
             return Mono.error(new IllegalArgumentException("Auction cannot start in the past."));
