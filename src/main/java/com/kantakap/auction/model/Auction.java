@@ -1,6 +1,7 @@
 package com.kantakap.auction.model;
 
-import lombok.Builder;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -8,10 +9,15 @@ import java.util.List;
 
 @Document
 @Builder
+@Getter
+@Setter
 public class Auction {
+    @Id
+    @Setter(lombok.AccessLevel.NONE)
     private String id;
 
     // who created the auction
+    @Setter(lombok.AccessLevel.NONE)
     private User createdBy;
 
     // who can manage the auction
