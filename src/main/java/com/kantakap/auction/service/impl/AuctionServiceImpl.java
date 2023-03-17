@@ -51,6 +51,7 @@ public class AuctionServiceImpl implements AuctionService {
                 .startsAt(createAuction.getStartsAt())
                 .status(AuctionStatus.CREATED)
                 .initialBalance(createAuction.getInitialBalance())
+                .fundsLossPreventionPercentage(createAuction.getFundsLossPreventionPercentage())
                 .initialTime(createAuction.getInitialTime())
                 .resetTime(createAuction.getResetTime())
                 .maximumBidAmount(createAuction.getMaximumBidAmount())
