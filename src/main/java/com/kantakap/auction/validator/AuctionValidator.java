@@ -23,8 +23,8 @@ public class AuctionValidator {
      */
     public static boolean validateStartTimeLessThanHalfHour(LocalDateTime startsAt) {
         var now = LocalDateTime.now();
-        var halfHourFromNow = now.minusMinutes(30);
-        return !startsAt.isBefore(halfHourFromNow);
+        var halfHourFromNow = startsAt.minusMinutes(30);
+        return !halfHourFromNow.isBefore(now);
     }
 
     /**
@@ -51,7 +51,7 @@ public class AuctionValidator {
             int initialBalance,
             int fundsLossPreventionPercentage
     ) {
-        var maxPossibleBidWithInitialBalance = initialBalance * (fundsLossPreventionPercentage / 100);
+        var maxPossibleBidWithInitialBalance = initialBalance * (fundsLossPreventionPercentage / 100d);
         return maximumBidAmount <= maxPossibleBidWithInitialBalance;
     }
 }
