@@ -17,6 +17,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserEventService userEventService;
 
+    /**
+     * Get the current user
+     * @param principal the user
+     * @return the user
+     */
     @Override
     public Mono<User> me(Principal principal) {
         if (principal == null)
@@ -27,24 +32,31 @@ public class UserServiceImpl implements UserService {
                 .doOnNext(userEventService::emitEvent);
     }
 
+    /**
+     * Save a user
+     * @param user the user to save
+     * @return the saved user
+     */
     @Override
     public Mono<User> save(User user) {
         return userRepository.save(user);
     }
 
-//    @Override
-//    public Mono<User> dummy() {
-//        return userRepository.save(User.builder().username("dummy").build())
-//                .doOnSuccess(user -> System.out.println("Do on success: " + user.getId() + "ID created"))
-//                .doOnNext(user -> System.out.println("Do on next: " + user.getUsername()))
-//                .then(Mono.error(new RuntimeException("Dummy error")));
-//    }
-
+    /**
+     * Find a user by username
+     * @param username the username
+     * @return the user
+     */
     @Override
     public Mono<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * Find a user by osu id
+     * @param osuId the osu id
+     * @return the user
+     */
     @Override
     public Mono<User> findByOsuId(Long osuId) {
         return userRepository.findByOsuId(osuId);

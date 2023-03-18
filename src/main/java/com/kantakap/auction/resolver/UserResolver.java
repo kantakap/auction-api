@@ -21,6 +21,11 @@ public class UserResolver {
     private final UserService userService;
     private final UserEventService userEventService;
 
+    /**
+     * Get the current user
+     * @param principal the user
+     * @return the user
+     */
     @QueryMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public Mono<User> me(Principal principal) {

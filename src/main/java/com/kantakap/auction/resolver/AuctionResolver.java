@@ -22,6 +22,12 @@ public class AuctionResolver {
     private final AuctionService auctionService;
     private final UserService userService;
 
+    /**
+     * Create a new auction
+     * @param principal the user
+     * @param createAuction the auction to create
+     * @return the created auction
+     */
     @MutationMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public Mono<Auction> createAuction(Principal principal, @Validated @Argument CreateAuction createAuction) {

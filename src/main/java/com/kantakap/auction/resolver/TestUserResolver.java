@@ -14,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+/**
+ * This resolver is only used in development environment to get a test token
+ */
 @Profile("dev")
 @RestController
 @Slf4j
