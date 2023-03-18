@@ -13,6 +13,8 @@ import java.util.Set;
 public class UserPrincipal implements OAuth2User, UserDetails {
 
     private String username;
+    private Long osuId;
+
     private Boolean active;
     private Set<GrantedAuthority> roles = new HashSet<>();
     private Map<String, Object> attributes;
@@ -20,6 +22,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public static UserPrincipal create(User user) {
         UserPrincipal userPrincipal = new UserPrincipal();
         userPrincipal.setUsername(user.getUsername());
+        userPrincipal.setOsuId(user.getOsuId());
         userPrincipal.setActive(user.getActive());
         userPrincipal.setRoles(user.getRoles());
         return userPrincipal;
@@ -73,6 +76,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setOsuId(Long osuId) {
+        this.osuId = osuId;
     }
 
     public Boolean getActive() {

@@ -1,8 +1,8 @@
 package com.kantakap.auction.model;
 
 import com.kantakap.auction.security.domain.Role;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +13,7 @@ import java.util.Set;
 
 @Document
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -23,7 +24,13 @@ public class User {
     private Boolean active;
     private Set<GrantedAuthority> roles = new HashSet<>();
 
-    @Builder
+    public User(String username) {
+        this.username = username;
+        this.osuId = -1L;
+        this.active = true;
+        this.roles.add(new SimpleGrantedAuthority(Role.ROLE_USER.toString()));
+    }
+
     public User(String username, Long osuId) {
         this.username = username;
         this.osuId = osuId;
@@ -31,11 +38,4 @@ public class User {
         this.roles.add(new SimpleGrantedAuthority(Role.ROLE_USER.toString()));
     }
 
-    @Builder
-    public User(String username) {
-        this.username = username;
-        this.osuId = -1L;
-        this.active = true;
-        this.roles.add(new SimpleGrantedAuthority(Role.ROLE_USER.toString()));
-    }
 }
