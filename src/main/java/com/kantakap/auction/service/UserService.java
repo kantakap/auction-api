@@ -13,4 +13,5 @@ public interface UserService {
 
     Mono<User> save(User user);
     Mono<User> findByUsername(String username);
+    Mono<User> findByOsuId(Long osuId);
 }
