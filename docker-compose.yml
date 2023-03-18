@@ -9,7 +9,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: pass
-      MONGO_INITDB_DATABASE: bot
+      MONGO_INITDB_DATABASE: auction
     networks:
       - kantakap-auction-api
 
