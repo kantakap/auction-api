@@ -14,12 +14,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDateTime;
-import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -167,12 +165,10 @@ class AuctionServiceImplTest {
         var results = auctionService.createAuction(user, createAuction);
 
         // then
-        verify(auctionRepository, times(1)).save(auctionArgumentCaptor.capture());
-
         StepVerifier.create(results)
                 .expectNextMatches(actualAuction -> {
-                    assertThat(auctionArgumentCaptor.getValue()).usingRecursiveComparison().isEqualTo(expectedAuction);
                     verify(auctionRepository, times(1)).save(auctionArgumentCaptor.capture());
+                    assertThat(auctionArgumentCaptor.getValue()).usingRecursiveComparison().isEqualTo(expectedAuction);
                     return true;
                 })
                 .verifyComplete();
