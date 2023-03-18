@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService {
     public Mono<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    @Override
+    public Mono<User> findByOsuId(Long osuId) {
+        return userRepository.findByOsuId(osuId);
+    }
 }
