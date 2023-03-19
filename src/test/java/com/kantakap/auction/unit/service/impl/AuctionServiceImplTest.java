@@ -161,6 +161,7 @@ class AuctionServiceImplTest {
                 .status(AuctionStatus.CREATED)
                 .build();
 
+        // when
         when(auctionRepository.save(any(Auction.class))).thenReturn(Mono.just(expectedAuction));
         var results = auctionService.createAuction(user, createAuction);
 
