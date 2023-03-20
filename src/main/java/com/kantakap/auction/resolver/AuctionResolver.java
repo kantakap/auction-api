@@ -2,6 +2,7 @@ package com.kantakap.auction.resolver;
 
 import com.kantakap.auction.model.Auction;
 import com.kantakap.auction.payload.CreateAuction;
+import com.kantakap.auction.quartz.QuartzTestSample;
 import com.kantakap.auction.service.AuctionService;
 import com.kantakap.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
@@ -21,6 +23,7 @@ import java.security.Principal;
 public class AuctionResolver {
     private final AuctionService auctionService;
     private final UserService userService;
+    private final QuartzTestSample quartzTestSample;
 
     /**
      * Create a new auction
@@ -34,5 +37,25 @@ public class AuctionResolver {
         return userService.me(principal)
                 .flatMap(user -> auctionService.createAuction(user, createAuction))
                 .log();
+    }
+
+    @MutationMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Mono<Auction> uploadPlayersData(@Argument String auctionId, @Argument MultipartFile file) {
+        return auctionService.findAuctionById(auctionId);
+    }
+
+    @MutationMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Mono<Auction> startAuction(Principal principal, @Argument String auctionId) {
+        return userService.me(principal)
+                .flatMap(user -> auctionService.startAuction(user, auctionId))
+                .log();
+    }
+
+    @MutationMapping
+    public Mono<Auction> stopAuction(@Argument String auctionId) {
+        quartzTestSample.stopJob(auctionId);
+        return null;
     }
 }

@@ -9,5 +9,8 @@ import reactor.core.publisher.Mono;
 @Service
 public interface AuctionService {
 
+    Mono<Auction> findAuctionById(String auctionId);
     Mono<Auction> createAuction(User creator, CreateAuction createAuction);
+
+    Mono<Auction> startAuction(User user, String auctionId);
 }

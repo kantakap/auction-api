@@ -4,6 +4,7 @@ import com.kantakap.auction.model.Auction;
 import com.kantakap.auction.model.AuctionStatus;
 import com.kantakap.auction.model.User;
 import com.kantakap.auction.payload.CreateAuction;
+import com.kantakap.auction.quartz.QuartzTestSample;
 import com.kantakap.auction.repository.AuctionRepository;
 import com.kantakap.auction.service.AuctionService;
 import com.kantakap.auction.validator.AuctionValidator;
@@ -15,6 +16,17 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
+    private final QuartzTestSample quartzTestSample;
+
+    /**
+     * Finds an auction by id.
+     * @param auctionId ID of the auction.
+     * @return Mono of the auction.
+     */
+    @Override
+    public Mono<Auction> findAuctionById(String auctionId) {
+        return auctionRepository.findById(auctionId);
+    }
 
     /**
      * Creates an auction.
@@ -59,5 +71,19 @@ public class AuctionServiceImpl implements AuctionService {
                 .build();
         return auctionRepository.save(auction)
                 .log();
+    }
+
+    @Override
+    public Mono<Auction> startAuction(User user, String auctionId) {
+        return this.findAuctionById(auctionId)
+                .flatMap(auction -> {
+                    if (!auction.getCreatedBy().equals(user))
+                        return Mono.error(new IllegalArgumentException("User is not the creator of the auction."));
+                    if (!auction.getStatus().equals(AuctionStatus.CREATED))
+                        return Mono.error(new IllegalArgumentException("Auction is not in the CREATED status."));
+                    auction.setStatus(AuctionStatus.STARTED);
+                    quartzTestSample.testQuartz(auction);
+                    return auctionRepository.save(auction);
+                });
     }
 }
