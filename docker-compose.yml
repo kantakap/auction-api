@@ -11,7 +11,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pass
       MONGO_INITDB_DATABASE: auction
     networks:
-      - kantakap-auction-api
+      - kantakap-network
 
   kantakap-auction-api:
     build:
@@ -20,11 +20,15 @@ services:
     container_name: kantakap-auction-api
     ports:
       - "8080:8080"
+      - "5005:5005"
     depends_on:
       - mongodb
     networks:
-      - kantakap-auction-api
+      - kantakap-network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
 networks:
-  kantakap-auction-api:
+  kantakap-network:
     driver: bridge
