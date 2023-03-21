@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
@@ -19,18 +20,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final CustomReactiveAuthenticationManager authenticationManager;
+    private final CustomReactiveUserDetailsService userDetailsService;
     private final SecurityContextRepository securityContextRepository;
     private final ReactiveOAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final TokenProvider tokenProvider;
 
     @Bean
     public HttpCookieOAuth2ServerAuthorizationRequestRepository cookieAuthorizationRequestRepository() {
         return new HttpCookieOAuth2ServerAuthorizationRequestRepository();
     }
 
-//    @Bean
-//    public TokenAuthenticationFilter tokenAuthenticationFilter() {
-//        return new TokenAuthenticationFilter();
-//    }
+    @Bean
+    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        return new TokenAuthenticationFilter(tokenProvider, userDetailsService);
+    }
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -48,12 +51,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .pathMatchers("/graphql")
                 .permitAll()
-//                .pathMatchers("/admin")
-//                .hasRole("ADMIN")
-//                .pathMatchers("/user")
-//                .hasRole("USER")
                 .anyExchange()
-                .authenticated()
+                .permitAll()
                 .and()
                 .httpBasic()
                 .disable()
@@ -63,7 +62,7 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin()
                 .disable()
-//                .addFilterBefore(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterBefore(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 
