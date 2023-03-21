@@ -6,7 +6,6 @@ import com.kantakap.auction.security.domain.UserPrincipal;
 import com.kantakap.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import reactor.core.publisher.Mono;
 /**
  * This resolver is only used in development environment to get a test token
  */
-@Profile("dev")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +23,10 @@ public class TestUserResolver {
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
+    /**
+     * Get a JWT token for the test user
+     * @return the token
+     */
     @QueryMapping
     public Mono<String> getTestToken() {
         return userService.findByOsuId(-1L)
