@@ -80,6 +80,22 @@ class AuctionServiceImplTest {
     }
 
     @Test
+    @DisplayName("Should throw exception when minimum team size is greater than maximum team size")
+    void shouldThrowExceptionWhenMinimumTeamSizeIsGreaterThanMaximumTeamSize() {
+        // given
+        createAuction.setMinimumTeamSize(11);
+        createAuction.setMaximumTeamSize(10);
+
+        // when
+        Mono<Auction> result = auctionService.createAuction(user, createAuction);
+
+        // then
+        StepVerifier.create(result)
+                .expectErrorMatches(throwable -> throwable.getMessage().equals("Minimum team size cannot be greater than maximum team size."))
+                .verify();
+    }
+
+    @Test
     @DisplayName("Should throw exception when start time is in past.")
     void shouldThrowExceptionWhenStartTimeIsInPast() {
         // given

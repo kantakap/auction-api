@@ -14,6 +14,34 @@ import static org.junit.jupiter.api.Assertions.*;
 class AuctionValidatorTest {
 
     @Test
+    @DisplayName("Should return true when minimum team size is less than maximum team size")
+    void shouldReturnTrueWhenMinimumTeamSizeIsLessThanMaximumTeamSize() {
+        // given
+        var minimumTeamSize = 1;
+        var maximumTeamSize = 2;
+
+        // when
+        var result = AuctionValidator.validateMinimumTeamSizeLessThanMaximumTeamSize(minimumTeamSize, maximumTeamSize);
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Should return false when minimum team size is greater than maximum team size")
+    void shouldReturnFalseWhenMinimumTeamSizeIsGreaterThanMaximumTeamSize() {
+        // given
+        var minimumTeamSize = 2;
+        var maximumTeamSize = 1;
+
+        // when
+        var result = AuctionValidator.validateMinimumTeamSizeLessThanMaximumTeamSize(minimumTeamSize, maximumTeamSize);
+
+        // then
+        assertFalse(result);
+    }
+
+    @Test
     @DisplayName("Should return true when start time is after now.")
     void shouldReturnTrueWhenStartTimeIsAfterNow() {
         // given
