@@ -1,13 +1,13 @@
 package com.kantakap.auction.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
 
-@Document
+@Data
 public class Player {
-    private String id;
     private Long osuId;
     private String username;
     private String country;
     private String rank;
     private String qualifierRank;
+    private Boolean isOngoing;
 }
