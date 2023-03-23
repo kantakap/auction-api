@@ -1,0 +1,7 @@
+type Bid {
+    id: ID!
+    auctionId: ID!
+    player: Player!
+    bidder: Bidder!
+    amount: Int!
+}
