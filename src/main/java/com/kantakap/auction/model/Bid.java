@@ -13,6 +13,7 @@ public class Bid {
     private Long playerOsuId;
     private Bidder bidder;
     private Integer amount;
+    private Boolean isOngoing;
 
 }
 

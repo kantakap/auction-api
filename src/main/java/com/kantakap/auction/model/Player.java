@@ -9,5 +9,4 @@ public class Player {
     private String country;
     private String rank;
     private String qualifierRank;
-    private Boolean isOngoing;
 }
