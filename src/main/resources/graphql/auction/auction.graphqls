@@ -10,6 +10,10 @@ type Auction {
     players: [Player]!
     # list of bidders / captains
     bidders: [Bidder]!
+    # minimum team size
+    minimumTeamSize: Int!
+    # maximum team size
+    maximumTeamSize: Int!
     # current status of the auction
     status: AuctionStatus!
     # initial balance

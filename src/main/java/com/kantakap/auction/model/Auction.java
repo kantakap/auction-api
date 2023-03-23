@@ -35,6 +35,13 @@ public class Auction {
     // list of bidders / captains
     private List<Bidder> bidders;
 
+    // ADDITIONAL INFORMATION =================================
+    // minimum team size
+    private Integer minimumTeamSize;
+
+    // maximum team size
+    private Integer maximumTeamSize;
+
     // AUCTION PROCESS ========================================
     // current status of the auction
     private AuctionStatus status;

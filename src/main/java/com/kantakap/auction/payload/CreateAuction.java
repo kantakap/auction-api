@@ -18,6 +18,12 @@ public class CreateAuction {
     @NotNull(message = "Start time must be specified")
     private LocalDateTime startsAt;
 
+    @Min(value = 2, message = "Minimum team size (including captain) must be at least 2")
+    private Integer minimumTeamSize;
+
+    @Min(value = 3, message = "Maximum team size (including captain) must be at least 3")
+    private Integer maximumTeamSize;
+
     @Min(value = 1000, message = "Initial balance must be at least 1000")
     private Integer initialBalance;
 
