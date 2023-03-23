@@ -9,7 +9,7 @@ type Auction {
     # list of players to be auctioned
     players: [Player]!
     # list of bidders / captains
-    bidders: [User]!
+    bidders: [Bidder]!
     # current status of the auction
     status: AuctionStatus!
     # initial balance

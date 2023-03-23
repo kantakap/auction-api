@@ -33,7 +33,7 @@ public class Auction {
     private List<Player> players;
 
     // list of bidders / captains
-    private List<User> bidders;
+    private List<Bidder> bidders;
 
     // AUCTION PROCESS ========================================
     // current status of the auction

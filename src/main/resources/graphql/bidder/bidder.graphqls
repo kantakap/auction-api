@@ -1,0 +1,5 @@
+type Bidder {
+    id: ID!
+    user: User!
+    balance: Int!
+}
