@@ -10,7 +10,7 @@ public class Bid {
     @MongoId
     private String id;
     private String auctionId;
-    private Player player;
+    private Long playerOsuId;
     private Bidder bidder;
     private Integer amount;
 
