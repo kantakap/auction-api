@@ -1,5 +1,4 @@
 type Player {
-    id: ID!
     osuId: Int!
     username: String!
     country: String!

@@ -1,7 +1,8 @@
 type Bid {
     id: ID!
     auctionId: ID!
-    player: Player!
-    bidder: Bidder!
+    playerOsuId: Int!
+    bidder: Bidder
     amount: Int!
+    isOngoing: Boolean!
 }

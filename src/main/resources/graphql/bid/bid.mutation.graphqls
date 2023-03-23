@@ -1,0 +1,4 @@
+extend type Mutation {
+    # bid for the player
+    bid(auctionId: ID!, amount: Int!): Bid!
+}
