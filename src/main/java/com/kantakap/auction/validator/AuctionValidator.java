@@ -5,6 +5,16 @@ import java.time.LocalDateTime;
 public class AuctionValidator {
 
     /**
+     * Validate that the minimum team size is less than the maximum team size
+     * @param minimumTeamSize minimum team size
+     * @param maximumTeamSize maximum team size
+     * @return true if the minimum team size is less than the maximum team size, false otherwise
+     */
+    public static boolean validateMinimumTeamSizeLessThanMaximumTeamSize(int minimumTeamSize, int maximumTeamSize) {
+        return minimumTeamSize < maximumTeamSize;
+    }
+
+    /**
      * Validate that the auction starts at a time in the future
      *
      * @param startsAt the time the auction starts

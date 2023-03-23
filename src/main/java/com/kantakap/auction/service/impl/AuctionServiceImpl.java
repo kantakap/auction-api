@@ -42,6 +42,9 @@ public class AuctionServiceImpl implements AuctionService {
         if (createAuction == null)
             return Mono.error(new IllegalArgumentException("Create auction payload cannot be null."));
 
+        if (!AuctionValidator.validateMinimumTeamSizeLessThanMaximumTeamSize(createAuction.getMinimumTeamSize(), createAuction.getMaximumTeamSize()))
+            return Mono.error(new IllegalArgumentException("Minimum team size cannot be greater than maximum team size."));
+
         if (!AuctionValidator.validateStartTimeIsBeforeNow(createAuction.getStartsAt()))
             return Mono.error(new IllegalArgumentException("Auction cannot start in the past."));
 
@@ -61,6 +64,8 @@ public class AuctionServiceImpl implements AuctionService {
                 .createdBy(creator)
                 .title(createAuction.getTitle())
                 .startsAt(createAuction.getStartsAt())
+                .minimumTeamSize(createAuction.getMinimumTeamSize())
+                .maximumTeamSize(createAuction.getMaximumTeamSize())
                 .status(AuctionStatus.CREATED)
                 .initialBalance(createAuction.getInitialBalance())
                 .fundsLossPreventionPercentage(createAuction.getFundsLossPreventionPercentage())
