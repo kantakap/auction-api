@@ -40,7 +40,7 @@ public class AuctionServiceImpl implements AuctionService {
         if (creator == null)
             return Mono.error(new NullPointerException("Creator cannot be null."));
         if (createAuction == null)
-            return Mono.error(new IllegalArgumentException("Create auction payload cannot be null."));
+            return Mono.error(new NullPointerException("Create auction payload cannot be null."));
 
         if (!AuctionValidator.validateMinimumTeamSizeLessThanMaximumTeamSize(createAuction.getMinimumTeamSize(), createAuction.getMaximumTeamSize()))
             return Mono.error(new IllegalArgumentException("Minimum team size cannot be greater than maximum team size."));
