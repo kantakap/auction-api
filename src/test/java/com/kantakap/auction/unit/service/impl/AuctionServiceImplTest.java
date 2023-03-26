@@ -46,6 +46,8 @@ class AuctionServiceImplTest {
                 .resetTime(30)
                 .maximumBidAmount(9000)
                 .minimumBidIncrement(200)
+                .minimumTeamSize(2)
+                .maximumTeamSize(3)
                 .build();
     }
 
@@ -173,6 +175,8 @@ class AuctionServiceImplTest {
                 .resetTime(createAuction.getResetTime())
                 .maximumBidAmount(createAuction.getMaximumBidAmount())
                 .minimumBidIncrement(createAuction.getMinimumBidIncrement())
+                .minimumTeamSize(2)
+                .maximumTeamSize(3)
                 .createdBy(user)
                 .status(AuctionStatus.CREATED)
                 .build();
