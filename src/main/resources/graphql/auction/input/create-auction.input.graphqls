@@ -14,4 +14,8 @@ input CreateAuction {
     maximumBidAmount: Int!
     # minimum bid increment
     minimumBidIncrement: Int!
+    # minimum team size (2)
+    minimumTeamSize: Int!
+    # maximum team size (3)
+    maximumTeamSize: Int!
 }
