@@ -1,6 +1,6 @@
 extend type Mutation {
     createAuction(createAuction: CreateAuction!): Auction!
-    uploadPlayersData(auctionId: ID!, multipartFile: MultipartFile!) : Auction!
+    processPlayersData(auctionId: ID!) : Auction!
 
     startAuction(auctionId: ID!): Auction!
     stopAuction(auctionId: ID!): Auction

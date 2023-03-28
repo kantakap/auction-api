@@ -13,4 +13,7 @@ public interface AuctionService {
     Mono<Auction> createAuction(User creator, CreateAuction createAuction);
 
     Mono<Auction> startAuction(User user, String auctionId);
+
+    boolean isAuctionCreator(User user, Auction auction);
+    Mono<Auction> processPlayersData(String auctionId);
 }

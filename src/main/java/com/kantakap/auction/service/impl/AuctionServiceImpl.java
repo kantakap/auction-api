@@ -7,16 +7,24 @@ import com.kantakap.auction.payload.CreateAuction;
 import com.kantakap.auction.quartz.QuartzTestSample;
 import com.kantakap.auction.repository.AuctionRepository;
 import com.kantakap.auction.service.AuctionService;
+import com.kantakap.auction.service.FileProcessorService;
 import com.kantakap.auction.validator.AuctionValidator;
+import com.opencsv.CSVReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
     private final QuartzTestSample quartzTestSample;
+    private final FileProcessorService fileProcessorService;
 
     /**
      * Finds an auction by id.
@@ -89,6 +97,36 @@ public class AuctionServiceImpl implements AuctionService {
                     auction.setStatus(AuctionStatus.STARTED);
                     quartzTestSample.testQuartz(auction);
                     return auctionRepository.save(auction);
+                });
+    }
+
+    /**
+     * Checks if the user is the creator of the auction.
+     * @param user User to check.
+     * @param auction Auction to check.
+     * @return True if the user is the creator of the auction, false otherwise.
+     */
+    @Override
+    public boolean isAuctionCreator(User user, Auction auction) {
+        return auction.getCreatedBy().getId().equals(user.getId());
+    }
+
+    @Override
+    public Mono<Auction> processPlayersData(String auctionId) {
+        return fileProcessorService.findCSVByAuctionId(auctionId)
+                .map(csv -> fileProcessorService.binaryToFile(csv.getCsv(), auctionId))
+                .map(file -> {
+                    List<List<String>> records = new ArrayList<>();
+                    try (CSVReader csvReader = new CSVReader(new FileReader(file))) {
+                        String[] values = null;
+                        while ((values = csvReader.readNext()) != null) {
+                            records.add(Arrays.asList(values));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(records);
+                    return null;
                 });
     }
 }

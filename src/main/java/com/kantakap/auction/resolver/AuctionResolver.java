@@ -41,8 +41,12 @@ public class AuctionResolver {
 
     @MutationMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Mono<Auction> uploadPlayersData(@Argument String auctionId, @Argument MultipartFile file) {
-        return auctionService.findAuctionById(auctionId);
+    public Mono<Auction> processPlayersData(Principal principal, @Argument String auctionId) {
+        return userService.me(principal)
+                .map(user -> auctionService.findAuctionById(auctionId)
+                        .filter(auction -> auctionService.isAuctionCreator(user, auction))
+                        .switchIfEmpty(Mono.error(new RuntimeException("You are not the creator of this auction"))))
+                .flatMap(auction -> auctionService.processPlayersData(auctionId));
     }
 
     @MutationMapping
