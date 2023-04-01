@@ -1,9 +1,11 @@
 package com.kantakap.auction.service;
 
 import com.kantakap.auction.model.Auction;
+import com.kantakap.auction.model.Player;
 import com.kantakap.auction.model.User;
 import com.kantakap.auction.payload.CreateAuction;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -15,5 +17,5 @@ public interface AuctionService {
     Mono<Auction> startAuction(User user, String auctionId);
 
     boolean isAuctionCreator(User user, Auction auction);
-    Mono<Auction> processPlayersData(String auctionId);
+    Flux<Player> processPlayersData(String auctionId);
 }
