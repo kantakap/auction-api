@@ -2,6 +2,7 @@ package com.kantakap.auction.service.impl;
 
 import com.kantakap.auction.model.Auction;
 import com.kantakap.auction.model.AuctionStatus;
+import com.kantakap.auction.model.Player;
 import com.kantakap.auction.model.User;
 import com.kantakap.auction.payload.CreateAuction;
 import com.kantakap.auction.quartz.QuartzTestSample;
@@ -12,6 +13,7 @@ import com.kantakap.auction.validator.AuctionValidator;
 import com.opencsv.CSVReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.FileReader;
@@ -112,10 +114,10 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Mono<Auction> processPlayersData(String auctionId) {
+    public Flux<Player> processPlayersData(String auctionId) {
         return fileProcessorService.findCSVByAuctionId(auctionId)
                 .map(csv -> fileProcessorService.binaryToFile(csv.getCsv(), auctionId))
-                .map(file -> {
+                .flatMapMany(file -> {
                     List<List<String>> records = new ArrayList<>();
                     try (CSVReader csvReader = new CSVReader(new FileReader(file))) {
                         String[] values = null;
