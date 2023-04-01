@@ -13,6 +13,16 @@ services:
     networks:
       - kantakap-network
 
+  kantakap-auction-file-handler:
+    build: https://github.com/kantakap/auction-file-handler.git
+    container_name: kantakap-auction-file-handler
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mongodb
+    networks:
+      - kantakap-network
+
   kantakap-auction-api:
     build:
       context: ./
