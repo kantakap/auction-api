@@ -128,7 +128,7 @@ public class AuctionServiceImpl implements AuctionService {
                         e.printStackTrace();
                     }
                     System.out.println(records);
-                    return null;
+                    return Flux.empty();
                 });
     }
 }
