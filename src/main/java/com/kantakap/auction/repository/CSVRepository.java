@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface CSVRepository extends ReactiveMongoRepository<CSV, String> {
     Mono<CSV> findByAuctionId(String auctionId);
-    Mono<Void> deleteByAuctionId(String auctionId);
+    Mono<Void> deleteAllByAuctionId(String auctionId);
 }
