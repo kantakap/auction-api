@@ -1,6 +1,6 @@
 extend type Mutation {
     createAuction(createAuction: CreateAuction!): Auction!
-    processPlayersData(auctionId: ID!) : Auction!
+    processPlayersData(auctionId: ID!) : [Player]
 
     startAuction(auctionId: ID!): Auction!
     stopAuction(auctionId: ID!): Auction
