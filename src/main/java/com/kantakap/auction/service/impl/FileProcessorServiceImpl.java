@@ -37,6 +37,6 @@ public class FileProcessorServiceImpl implements FileProcessorService {
 
     @Override
     public Mono<Void> deleteCSVByAuctionId(String auctionId) {
-        return csvRepository.deleteByAuctionId(auctionId);
+        return csvRepository.deleteAllByAuctionId(auctionId);
     }
 }
