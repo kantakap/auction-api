@@ -17,9 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileController {
 
-    @PutMapping(value = "/auction/{auctionId}/players-data", consumes = "multipart/form-data")
+    @PostMapping(value = "/auction/{auctionId}/players-data", consumes = "multipart/form-data")
 //    @Secured("ROLE_USER")
-    public List<List<String>> uploadPlayersData(@PathVariable String auctionId, @RequestPart MultipartFile file) {
+    public List<List<String>> uploadPlayersData(@PathVariable String auctionId, @RequestPart("file") MultipartFile file) {
         try {
             Reader reader = new InputStreamReader(file.getInputStream());
             List<List<String>> records = new ArrayList<>();
