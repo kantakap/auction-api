@@ -1,15 +1,12 @@
 package com.kantakap.auction.service;
 
-import com.kantakap.auction.model.CSV;
-import org.bson.types.Binary;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-import java.io.File;
+import java.util.List;
 
 @Service
 public interface FileProcessorService {
-    File binaryToFile(Binary binary, String fileName);
-    Mono<CSV> findCSVByAuctionId(String auctionId);
-    Mono<Void> deleteCSVByAuctionId(String auctionId);
+    Flux<List<String>> readCsvData(FilePart filePart);
 }

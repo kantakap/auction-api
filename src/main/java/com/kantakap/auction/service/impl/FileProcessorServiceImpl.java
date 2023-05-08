@@ -1,42 +1,39 @@
 package com.kantakap.auction.service.impl;
 
-import com.kantakap.auction.model.CSV;
-import com.kantakap.auction.repository.CSVRepository;
 import com.kantakap.auction.service.FileProcessorService;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.Binary;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class FileProcessorServiceImpl implements FileProcessorService {
-    private final CSVRepository csvRepository;
-    @Override
-    public File binaryToFile(Binary binary, String fileName) {
-        File file = new File(fileName);
-
-        try (FileOutputStream outputStream = new FileOutputStream(file)) {
-            outputStream.write(binary.getData());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return file;
-    }
 
     @Override
-    public Mono<CSV> findCSVByAuctionId(String auctionId) {
-        return csvRepository.findByAuctionId(auctionId)
-                .switchIfEmpty(Mono.error(new RuntimeException("CSV not found.")));
-    }
-
-    @Override
-    public Mono<Void> deleteCSVByAuctionId(String auctionId) {
-        return csvRepository.deleteAllByAuctionId(auctionId);
+    public Flux<List<String>> readCsvData(FilePart filePart) {
+        Flux<DataBuffer> dataBufferFlux = filePart.content();
+        return DataBufferUtils.join(dataBufferFlux)
+                .map(dataBuffer -> dataBuffer.asInputStream(true))
+                .map(inputStream -> new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+                .map(CSVReader::new)
+                .flatMapIterable(csvReader -> {
+                    try {
+                        return csvReader.readAll();
+                    } catch (IOException | CsvException e) {
+                        throw new RuntimeException("Error occurred while reading CSV file");
+                    }
+                })
+                .map(Arrays::asList);
     }
 }
