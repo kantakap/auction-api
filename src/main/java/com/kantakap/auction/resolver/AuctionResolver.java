@@ -45,16 +45,6 @@ public class AuctionResolver {
 
     @MutationMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Flux<Player> processPlayersData(Principal principal, @Argument String auctionId) {
-        return userService.me(principal)
-                .map(user -> auctionService.findAuctionById(auctionId)
-                        .filter(auction -> auctionService.isAuctionCreator(user, auction))
-                        .switchIfEmpty(Mono.error(new RuntimeException("You are not the creator of this auction"))))
-                .flatMapMany(auction -> auctionService.processPlayersData(auctionId));
-    }
-
-    @MutationMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
     public Mono<Auction> startAuction(Principal principal, @Argument String auctionId) {
         return userService.me(principal)
                 .flatMap(user -> auctionService.startAuction(user, auctionId))
