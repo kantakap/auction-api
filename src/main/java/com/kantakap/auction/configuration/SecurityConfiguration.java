@@ -71,13 +71,7 @@ public class SecurityConfiguration {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of(
                 "https://localhost:8080",
-                "http://localhost:3000",
-                "http://kantakap-auction-file-handler/",
-                "http://kantakap-auction-file-handler",
-                "http://kantakap-auction-file-handler:8090",
-                "https://kantakap-auction-file-handler/",
-                "https://kantakap-auction-file-handler",
-                "https://kantakap-auction-file-handler:8090"
+                "http://localhost:3000"
         ));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
