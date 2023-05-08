@@ -112,23 +112,4 @@ public class AuctionServiceImpl implements AuctionService {
     public boolean isAuctionCreator(User user, Auction auction) {
         return auction.getCreatedBy().getId().equals(user.getId());
     }
-
-    @Override
-    public Flux<Player> processPlayersData(String auctionId) {
-        return fileProcessorService.findCSVByAuctionId(auctionId)
-                .map(csv -> fileProcessorService.binaryToFile(csv.getCsv(), auctionId))
-                .flatMapMany(file -> {
-                    List<List<String>> records = new ArrayList<>();
-                    try (CSVReader csvReader = new CSVReader(new FileReader(file))) {
-                        String[] values = null;
-                        while ((values = csvReader.readNext()) != null) {
-                            records.add(Arrays.asList(values));
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(records);
-                    return Flux.empty();
-                });
-    }
 }

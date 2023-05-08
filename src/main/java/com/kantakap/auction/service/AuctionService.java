@@ -17,5 +17,4 @@ public interface AuctionService {
     Mono<Auction> startAuction(User user, String auctionId);
 
     boolean isAuctionCreator(User user, Auction auction);
-    Flux<Player> processPlayersData(String auctionId);
 }
